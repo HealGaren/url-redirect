@@ -1,0 +1,11 @@
+{
+  "name": "url-redirect",
+  "version": "1.0.0",
+  "main": "generate-redirect-htmls.js",
+  "scripts": {
+    "generate": "node generate-redirect-htmls.js"
+  },
+  "author": "HealGaren",
+  "license": "MIT",
+  "description": ""
+}

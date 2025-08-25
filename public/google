@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>Redirect: google</title>
+  <script>
+    window.location.replace("https://www.google.com");
+  </script>
+</head>
+<body>
+  google로 이동 중...
+</body>
+</html>

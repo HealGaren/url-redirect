@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>Redirect: naver</title>
+  <script>
+    window.location.replace("https://www.naver.com");
+  </script>
+</head>
+<body>
+  naver로 이동 중...
+</body>
+</html>

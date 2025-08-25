@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>Redirect: github</title>
+  <script>
+    window.location.replace("https://github.com");
+  </script>
+</head>
+<body>
+  github로 이동 중...
+</body>
+</html>

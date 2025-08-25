@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>Redirect: memil-chat</title>
+  <script>
+    window.location.replace("https://memil.chat");
+  </script>
+</head>
+<body>
+  memil-chat로 이동 중...
+</body>
+</html>
