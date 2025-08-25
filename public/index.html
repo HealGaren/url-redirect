@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>URL Redirect</title>
+  <style>
+    body { font-family: sans-serif; }
+    .link-list { margin-top: 24px; }
+    .link-item { margin-bottom: 16px; }
+    .copy-btn { margin-left: 8px; }
+    .error { color: red; margin-bottom: 16px; }
+    .guide { margin-bottom: 8px; }
+  </style>
+  <script>
+    function getKeywordFromQuery() {
+      const params = new URLSearchParams(window.location.search);
+      return params.get('link');
+    }
+
+    async function fetchLinks() {
+      const res = await fetch('links.json');
+      return await res.json();
+    }
+
+    function getOriginPath() {
+      return window.location.origin + window.location.pathname;
+    }
+
+    function renderGuide(keys, origin, errorMsg) {
+      document.body.innerHTML = '';
+      if (errorMsg) {
+        const errorDiv = document.createElement('div');
+        errorDiv.className = 'error';
+        errorDiv.innerText = errorMsg;
+        document.body.appendChild(errorDiv);
+      }
+      const guideDiv = document.createElement('div');
+      guideDiv.className = 'guide';
+      guideDiv.innerText = '?link=[링크 키워드]를 URL에 붙여주시면 바로 리다이렉트됩니다.';
+      document.body.appendChild(guideDiv);
+
+      const copyGuide = document.createElement('div');
+      copyGuide.innerText = '혹은 아래 링크를 복사해 주세요.';
+      document.body.appendChild(copyGuide);
+
+      const listDiv = document.createElement('div');
+      listDiv.className = 'link-list';
+      keys.forEach(k => {
+        listDiv.appendChild(createLinkItem(k, origin));
+      });
+      document.body.appendChild(listDiv);
+    }
+
+    function createLinkItem(keyword, origin) {
+      const itemDiv = document.createElement('div');
+      itemDiv.className = 'link-item';
+      const url = `${origin}?link=${keyword}`;
+      const linkSpan = document.createElement('span');
+      linkSpan.innerText = `${keyword}: ${url}`;
+      itemDiv.appendChild(linkSpan);
+
+      const btn = document.createElement('button');
+      btn.className = 'copy-btn';
+      btn.innerText = '복사';
+      btn.onclick = () => {
+        navigator.clipboard.writeText(url);
+        btn.innerText = '복사됨!';
+        setTimeout(() => btn.innerText = '복사', 1000);
+      };
+      itemDiv.appendChild(btn);
+
+      return itemDiv;
+    }
+
+    async function redirectByKeyword() {
+      const keyword = getKeywordFromQuery();
+      const links = await fetchLinks();
+      const keys = Object.keys(links);
+      const origin = getOriginPath();
+
+      if (!keyword) {
+        renderGuide(keys, origin);
+        return;
+      }
+      if (links[keyword]) {
+        window.location.replace(links[keyword]);
+      } else {
+        renderGuide(keys, origin, '링크 키워드가 잘못되었습니다.');
+      }
+    }
+    window.onload = redirectByKeyword;
+  </script>
+</head>
+<body>
+  리다이렉트 중...
+</body>
+</html>
